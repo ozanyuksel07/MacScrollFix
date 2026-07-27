@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		750E99893017A24E00D708F4 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 750E99883017A24E00D708F4 /* AppIcon.icon */; };
-		A10000000000000000000001 /* ScrollFixApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000001 /* ScrollFixApp.swift */; };
-		A10000000000000000000002 /* ScrollFixModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000002 /* ScrollFixModel.swift */; };
+		A10000000000000000000001 /* MacScrollFixApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000001 /* MacScrollFixApp.swift */; };
+		A10000000000000000000002 /* MacScrollFixModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000002 /* MacScrollFixModel.swift */; };
 		A10000000000000000000003 /* EventTapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000003 /* EventTapManager.swift */; };
 		A10000000000000000000004 /* ScrollEventTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000004 /* ScrollEventTransformer.swift */; };
 		A10000000000000000000005 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A20000000000000000000009 /* ServiceManagement.framework */; };
@@ -23,23 +23,22 @@
 			containerPortal = A40000000000000000000001 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = A50000000000000000000001;
-			remoteInfo = ScrollFix;
+			remoteInfo = MacScrollFix;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		750E99883017A24E00D708F4 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
-		A20000000000000000000001 /* ScrollFixApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollFixApp.swift; sourceTree = "<group>"; };
-		A20000000000000000000002 /* ScrollFixModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollFixModel.swift; sourceTree = "<group>"; };
+		A20000000000000000000001 /* MacScrollFixApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacScrollFixApp.swift; sourceTree = "<group>"; };
+		A20000000000000000000002 /* MacScrollFixModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacScrollFixModel.swift; sourceTree = "<group>"; };
 		A20000000000000000000003 /* EventTapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTapManager.swift; sourceTree = "<group>"; };
 		A20000000000000000000004 /* ScrollEventTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollEventTransformer.swift; sourceTree = "<group>"; };
 		A20000000000000000000005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A20000000000000000000006 /* ScrollFix.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ScrollFix.entitlements; sourceTree = "<group>"; };
 		A20000000000000000000007 /* ScrollEventTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollEventTransformerTests.swift; sourceTree = "<group>"; };
 		A20000000000000000000008 /* MacScrollFix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacScrollFix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A20000000000000000000009 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		A2000000000000000000000A /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
-		A2000000000000000000000B /* ScrollFixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrollFixTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2000000000000000000000B /* MacScrollFixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MacScrollFixTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2000000000000000000000C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -66,34 +65,33 @@
 		A70000000000000000000001 = {
 			isa = PBXGroup;
 			children = (
-				A70000000000000000000002 /* ScrollFix */,
-				A70000000000000000000003 /* ScrollFixTests */,
+				A70000000000000000000002 /* MacScrollFix */,
+				A70000000000000000000003 /* MacScrollFixTests */,
 				A70000000000000000000004 /* Frameworks */,
 				A2000000000000000000000C /* README.md */,
 				A70000000000000000000005 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		A70000000000000000000002 /* ScrollFix */ = {
+		A70000000000000000000002 /* MacScrollFix */ = {
 			isa = PBXGroup;
 			children = (
-				A20000000000000000000001 /* ScrollFixApp.swift */,
-				A20000000000000000000002 /* ScrollFixModel.swift */,
+				A20000000000000000000001 /* MacScrollFixApp.swift */,
+				A20000000000000000000002 /* MacScrollFixModel.swift */,
 				A20000000000000000000003 /* EventTapManager.swift */,
 				A20000000000000000000004 /* ScrollEventTransformer.swift */,
 				A20000000000000000000005 /* Info.plist */,
-				A20000000000000000000006 /* ScrollFix.entitlements */,
 				750E99883017A24E00D708F4 /* AppIcon.icon */,
 			);
-			path = ScrollFix;
+			path = MacScrollFix;
 			sourceTree = "<group>";
 		};
-		A70000000000000000000003 /* ScrollFixTests */ = {
+		A70000000000000000000003 /* MacScrollFixTests */ = {
 			isa = PBXGroup;
 			children = (
 				A20000000000000000000007 /* ScrollEventTransformerTests.swift */,
 			);
-			path = ScrollFixTests;
+			path = MacScrollFixTests;
 			sourceTree = "<group>";
 		};
 		A70000000000000000000004 /* Frameworks */ = {
@@ -109,7 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				A20000000000000000000008 /* MacScrollFix.app */,
-				A2000000000000000000000B /* ScrollFixTests.xctest */,
+				A2000000000000000000000B /* MacScrollFixTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -117,9 +115,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A50000000000000000000001 /* ScrollFix */ = {
+		A50000000000000000000001 /* MacScrollFix */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A80000000000000000000001 /* Build configuration list for PBXNativeTarget "ScrollFix" */;
+			buildConfigurationList = A80000000000000000000001 /* Build configuration list for PBXNativeTarget "MacScrollFix" */;
 			buildPhases = (
 				A90000000000000000000001 /* Sources */,
 				A60000000000000000000001 /* Frameworks */,
@@ -129,14 +127,14 @@
 			);
 			dependencies = (
 			);
-			name = ScrollFix;
+			name = MacScrollFix;
 			productName = MacScrollFix;
 			productReference = A20000000000000000000008 /* MacScrollFix.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A50000000000000000000002 /* ScrollFixTests */ = {
+		A50000000000000000000002 /* MacScrollFixTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A80000000000000000000002 /* Build configuration list for PBXNativeTarget "ScrollFixTests" */;
+			buildConfigurationList = A80000000000000000000002 /* Build configuration list for PBXNativeTarget "MacScrollFixTests" */;
 			buildPhases = (
 				A90000000000000000000002 /* Sources */,
 				A60000000000000000000002 /* Frameworks */,
@@ -147,9 +145,9 @@
 			dependencies = (
 				AB0000000000000000000001 /* PBXTargetDependency */,
 			);
-			name = ScrollFixTests;
-			productName = ScrollFixTests;
-			productReference = A2000000000000000000000B /* ScrollFixTests.xctest */;
+			name = MacScrollFixTests;
+			productName = MacScrollFixTests;
+			productReference = A2000000000000000000000B /* MacScrollFixTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -171,7 +169,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A80000000000000000000003 /* Build configuration list for PBXProject "ScrollFix" */;
+			buildConfigurationList = A80000000000000000000003 /* Build configuration list for PBXProject "MacScrollFix" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -184,8 +182,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A50000000000000000000001 /* ScrollFix */,
-				A50000000000000000000002 /* ScrollFixTests */,
+				A50000000000000000000001 /* MacScrollFix */,
+				A50000000000000000000002 /* MacScrollFixTests */,
 			);
 		};
 /* End PBXProject section */
@@ -213,8 +211,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A10000000000000000000001 /* ScrollFixApp.swift in Sources */,
-				A10000000000000000000002 /* ScrollFixModel.swift in Sources */,
+				A10000000000000000000001 /* MacScrollFixApp.swift in Sources */,
+				A10000000000000000000002 /* MacScrollFixModel.swift in Sources */,
 				A10000000000000000000003 /* EventTapManager.swift in Sources */,
 				A10000000000000000000004 /* ScrollEventTransformer.swift in Sources */,
 			);
@@ -233,7 +231,7 @@
 /* Begin PBXTargetDependency section */
 		AB0000000000000000000001 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A50000000000000000000001 /* ScrollFix */;
+			target = A50000000000000000000001 /* MacScrollFix */;
 			targetProxy = A30000000000000000000001 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -353,21 +351,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ScrollFix/ScrollFix.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = ScrollFix/Info.plist;
+				INFOPLIST_FILE = MacScrollFix/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ozanyuksel.ScrollFix;
-				PRODUCT_MODULE_NAME = ScrollFix;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ozanyuksel.MacScrollFix;
+				PRODUCT_MODULE_NAME = MacScrollFix;
 				PRODUCT_NAME = MacScrollFix;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -378,21 +375,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ScrollFix/ScrollFix.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = ScrollFix/Info.plist;
+				INFOPLIST_FILE = MacScrollFix/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ozanyuksel.ScrollFix;
-				PRODUCT_MODULE_NAME = ScrollFix;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ozanyuksel.MacScrollFix;
+				PRODUCT_MODULE_NAME = MacScrollFix;
 				PRODUCT_NAME = MacScrollFix;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -406,7 +402,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ozanyuksel.ScrollFixTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ozanyuksel.MacScrollFixTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -421,7 +417,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ozanyuksel.ScrollFixTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ozanyuksel.MacScrollFixTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -432,7 +428,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A80000000000000000000001 /* Build configuration list for PBXNativeTarget "ScrollFix" */ = {
+		A80000000000000000000001 /* Build configuration list for PBXNativeTarget "MacScrollFix" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AC0000000000000000000003 /* Debug */,
@@ -441,7 +437,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A80000000000000000000002 /* Build configuration list for PBXNativeTarget "ScrollFixTests" */ = {
+		A80000000000000000000002 /* Build configuration list for PBXNativeTarget "MacScrollFixTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AC0000000000000000000005 /* Debug */,
@@ -450,7 +446,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A80000000000000000000003 /* Build configuration list for PBXProject "ScrollFix" */ = {
+		A80000000000000000000003 /* Build configuration list for PBXProject "MacScrollFix" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AC0000000000000000000001 /* Debug */,

@@ -1,17 +1,32 @@
 import AppKit
 import ApplicationServices
 import Combine
+import OSLog
 import ServiceManagement
 
-final class ScrollFixModel: ObservableObject {
-    static let shared = ScrollFixModel()
+@MainActor
+final class MacScrollFixModel: ObservableObject {
+    static let shared = MacScrollFixModel()
 
     @Published private(set) var isEnabled: Bool
     @Published private(set) var accessibilityGranted: Bool
     @Published private(set) var launchAtLogin: Bool
 
     var isOperational: Bool {
-        isEnabled && accessibilityGranted && eventTapManager.isInstalled
+        isEnabled && accessibilityGranted && eventTapManager.isOperational
+    }
+
+    var statusText: String {
+        if isOperational {
+            return "Aktif"
+        }
+        if !accessibilityGranted {
+            return "Kapalı · Erişilebilirlik izni gerekli"
+        }
+        if isEnabled {
+            return "Kapalı · Yeniden bağlanıyor"
+        }
+        return "Kapalı"
     }
 
     private enum DefaultsKey {
@@ -21,6 +36,10 @@ final class ScrollFixModel: ObservableObject {
 
     private let defaults: UserDefaults
     private let eventTapManager = EventTapManager()
+    private let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier ?? "com.ozanyuksel.MacScrollFix",
+        category: "Application"
+    )
     private var permissionTimer: Timer?
     private var hasStarted = false
     private var isShowingAlert = false
@@ -45,8 +64,9 @@ final class ScrollFixModel: ObservableObject {
         // LSUIElement ana güvenceyi sağlar; accessory politikası Dock ikonunu ayrıca engeller.
         NSApplication.shared.setActivationPolicy(.accessory)
 
-        let isFirstRequest = !defaults.bool(forKey: DefaultsKey.didRequestAccessibility)
-        if isFirstRequest {
+        let shouldRequestAccessibility =
+            !defaults.bool(forKey: DefaultsKey.didRequestAccessibility)
+        if shouldRequestAccessibility {
             defaults.set(true, forKey: DefaultsKey.didRequestAccessibility)
             accessibilityGranted = Self.checkAccessibility(prompt: true)
         } else {
@@ -56,7 +76,9 @@ final class ScrollFixModel: ObservableObject {
         synchronizeEventTap()
         startPermissionMonitoring()
 
-        if !accessibilityGranted {
+        // İlk çalıştırmada macOS zaten kendi izin penceresini gösterir. Aynı anda
+        // ikinci bir pencere açmamak için özel açıklamayı sonraki açılışlara bırakırız.
+        if !accessibilityGranted && !shouldRequestAccessibility {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
                 self?.showAccessibilityExplanation()
             }
@@ -70,7 +92,7 @@ final class ScrollFixModel: ObservableObject {
         defaults.set(enabled, forKey: DefaultsKey.correctionEnabled)
 
         if enabled {
-            accessibilityGranted = Self.checkAccessibility(prompt: !accessibilityGranted)
+            accessibilityGranted = Self.checkAccessibility(prompt: false)
             if !accessibilityGranted {
                 showAccessibilityExplanation()
             }
@@ -119,6 +141,7 @@ final class ScrollFixModel: ObservableObject {
         permissionTimer?.invalidate()
         permissionTimer = nil
         eventTapManager.stop()
+        logger.info("MacScrollFix güvenli biçimde kapatıldı.")
     }
 
     private static var isLoginItemEnabled: Bool {
@@ -139,29 +162,42 @@ final class ScrollFixModel: ObservableObject {
 
     private func startPermissionMonitoring() {
         permissionTimer?.invalidate()
-        permissionTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) {
-            [weak self] _ in
-            guard let self else { return }
+        let timer = Timer(
+            timeInterval: 2.0,
+            target: self,
+            selector: #selector(monitorSystemState),
+            userInfo: nil,
+            repeats: true
+        )
+        timer.tolerance = 0.4
+        RunLoop.main.add(timer, forMode: .common)
+        permissionTimer = timer
+    }
 
-            let isGrantedNow = AXIsProcessTrusted()
-            if isGrantedNow != self.accessibilityGranted {
-                self.accessibilityGranted = isGrantedNow
-                self.synchronizeEventTap()
-            } else if self.isEnabled && isGrantedNow && !self.eventTapManager.isInstalled {
-                // Tap geçici bir sistem durumu nedeniyle kurulamadıysa yeniden dene.
-                self.synchronizeEventTap()
+    @objc private func monitorSystemState() {
+        let isGrantedNow = AXIsProcessTrusted()
+        if isGrantedNow != accessibilityGranted {
+            accessibilityGranted = isGrantedNow
+            synchronizeEventTap()
+        } else if isEnabled && isGrantedNow {
+            let wasOperational = eventTapManager.isOperational
+            _ = eventTapManager.restoreIfNeeded()
+            if wasOperational != eventTapManager.isOperational {
+                objectWillChange.send()
             }
+        }
 
-            let loginItemEnabledNow = Self.isLoginItemEnabled
-            if loginItemEnabledNow != self.launchAtLogin {
-                self.launchAtLogin = loginItemEnabledNow
-            }
+        let loginItemEnabledNow = Self.isLoginItemEnabled
+        if loginItemEnabledNow != launchAtLogin {
+            launchAtLogin = loginItemEnabledNow
         }
     }
 
     private func synchronizeEventTap() {
         if isEnabled && accessibilityGranted {
-            _ = eventTapManager.start()
+            if !eventTapManager.start() {
+                logger.error("Scroll event tap başlatılamadı; otomatik olarak yeniden denenecek.")
+            }
         } else {
             eventTapManager.stop()
         }

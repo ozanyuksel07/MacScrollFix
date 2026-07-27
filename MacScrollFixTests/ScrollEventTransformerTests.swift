@@ -1,6 +1,6 @@
 import CoreGraphics
 import XCTest
-@testable import ScrollFix
+@testable import MacScrollFix
 
 final class ScrollEventTransformerTests: XCTestCase {
     func testDiscreteScrollInvertsVerticalAndHorizontalDeltas() throws {
@@ -51,15 +51,42 @@ final class ScrollEventTransformerTests: XCTestCase {
         XCTAssertTrue(ScrollEventTransformer.isContinuous(event))
     }
 
-    private func makeScrollEvent(wheel1: Int32, wheel2: Int32) throws -> CGEvent {
+    func testThirdAxisAndZeroValuesAreHandled() throws {
+        let event = try makeScrollEvent(wheel1: 0, wheel2: 0, wheel3: 7)
+        event.setIntegerValueField(.scrollWheelEventIsContinuous, value: 0)
+
+        ScrollEventTransformer.invertDiscreteScrollDeltas(in: event)
+
+        XCTAssertEqual(event.getIntegerValueField(.scrollWheelEventDeltaAxis1), 0)
+        XCTAssertEqual(event.getIntegerValueField(.scrollWheelEventDeltaAxis2), 0)
+        XCTAssertEqual(event.getIntegerValueField(.scrollWheelEventDeltaAxis3), -7)
+    }
+
+    func testInvertingTwiceRestoresOriginalDeltas() throws {
+        let event = try makeScrollEvent(wheel1: 8, wheel2: -3, wheel3: 2)
+        event.setIntegerValueField(.scrollWheelEventIsContinuous, value: 0)
+
+        ScrollEventTransformer.invertDiscreteScrollDeltas(in: event)
+        ScrollEventTransformer.invertDiscreteScrollDeltas(in: event)
+
+        XCTAssertEqual(event.getIntegerValueField(.scrollWheelEventDeltaAxis1), 8)
+        XCTAssertEqual(event.getIntegerValueField(.scrollWheelEventDeltaAxis2), -3)
+        XCTAssertEqual(event.getIntegerValueField(.scrollWheelEventDeltaAxis3), 2)
+    }
+
+    private func makeScrollEvent(
+        wheel1: Int32,
+        wheel2: Int32,
+        wheel3: Int32 = 0
+    ) throws -> CGEvent {
         try XCTUnwrap(
             CGEvent(
                 scrollWheelEvent2Source: nil,
                 units: .line,
-                wheelCount: 2,
+                wheelCount: 3,
                 wheel1: wheel1,
                 wheel2: wheel2,
-                wheel3: 0
+                wheel3: wheel3
             )
         )
     }

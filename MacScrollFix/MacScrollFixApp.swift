@@ -2,9 +2,9 @@ import AppKit
 import SwiftUI
 
 @main
-struct ScrollFixApp: App {
+struct MacScrollFixApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
-    @StateObject private var model = ScrollFixModel.shared
+    @StateObject private var model = MacScrollFixModel.shared
 
     var body: some Scene {
         MenuBarExtra {
@@ -16,7 +16,8 @@ struct ScrollFixApp: App {
                 )
             )
 
-            Text(model.isOperational ? "Aktif" : "Kapalı")
+            Text(model.statusText)
+                .foregroundStyle(.secondary)
 
             Divider()
 
@@ -50,10 +51,10 @@ struct ScrollFixApp: App {
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
-        ScrollFixModel.shared.applicationDidFinishLaunching()
+        MacScrollFixModel.shared.applicationDidFinishLaunching()
     }
 
     func applicationWillTerminate(_ notification: Notification) {
-        ScrollFixModel.shared.shutdown()
+        MacScrollFixModel.shared.shutdown()
     }
 }

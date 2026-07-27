@@ -1,7 +1,7 @@
 # MacScrollFix
 
 <p align="center">
-  <img src="ScrollFix/AppIcon.icon/Assets/ScrollFixIcon.png" alt="MacScrollFix uygulama ikonu" width="180">
+  <img src="MacScrollFix/AppIcon.icon/Assets/MacScrollFixIcon.png" alt="MacScrollFix uygulama ikonu" width="180">
 </p>
 
 MacScrollFix, standart USB veya Bluetooth mouse tekerleğini Windows'taki alışılmış
@@ -30,33 +30,53 @@ değiştirdiği için MacScrollFix farklı bir yaklaşım kullanır:
 - Seçilen durum `UserDefaults` ile saklanır.
 - macOS 13+ için **Girişte Başlat (Launch at Login)** desteği sunar.
 - Erişilebilirlik iznini kontrol eder ve gerekli ayar sayfasını açabilir.
-- Event tap sistem tarafından kapatılırsa güvenli biçimde yeniden etkinleştirir.
+- Event tap sistem tarafından kapatılır veya geçersiz hâle gelirse tek kopya
+  korunarak güvenli biçimde yeniden kurulur.
+- Sorun giderme için yalnızca macOS birleşik günlük sistemine yerel teknik kayıt
+  yazar; scroll içeriği kaydedilmez.
 - İnternet bağlantısı veya üçüncü taraf bağımlılık kullanmaz.
 
 ## Sistem gereksinimleri
 
 - macOS 13 Ventura veya daha yeni bir sürüm
-- Xcode 14 veya daha yeni bir sürüm
+- Xcode 26 veya daha yeni bir sürüm
 - Standart tekerlekli USB veya Bluetooth mouse
 
-## Kurulum ve Xcode ile çalıştırma
+## GitHub'dan indirip kurma
+
+Bu proje Apple Developer ID sertifikası kullanmaz. Bu nedenle GitHub'dan alınan
+hazır bir uygulama macOS tarafından otomatik olarak güvenilir sayılmaz. En güvenli
+ücretsiz yöntem, kaynak kodunu Xcode ile kendi Mac'inizde derlemektir:
+
+1. GitHub sayfasındaki **Code > Download ZIP** seçeneğine basın.
+2. İnen ZIP dosyasını çift tıklayarak açın.
+3. `MacScrollFix.xcodeproj` dosyasını çift tıklayın.
+4. Xcode'un üst kısmında scheme olarak **MacScrollFix**, aygıt olarak
+   **My Mac** seçildiğini kontrol edin.
+5. `Command + B` tuşlarına basarak uygulamayı derleyin.
+6. Xcode'un sol tarafındaki **Products > MacScrollFix.app** öğesine sağ tıklayıp
+   **Show in Finder** seçeneğine basın.
+7. `MacScrollFix.app` dosyasını **Applications (Uygulamalar)** klasörüne sürükleyin.
+8. Uygulamayı Applications klasöründen açın ve Erişilebilirlik iznini verin.
+
+Ücretsiz Apple hesabı yerel derleme için yeterlidir; ücretli Apple Developer
+üyeliği gerekmez. Xcode imzalama uyarısı gösterirse **TARGETS > MacScrollFix >
+Signing & Capabilities** bölümünden kişisel Apple hesabınıza ait **Team** seçilebilir.
+
+## Xcode ile geliştirme
 
 1. Proje klasörünü Mac'inize indirin veya Git ile klonlayın.
-2. `ScrollFix.xcodeproj` dosyasını Xcode ile açın.
-3. Scheme olarak **ScrollFix**, hedef aygıt olarak **My Mac** seçin.
+2. `MacScrollFix.xcodeproj` dosyasını Xcode ile açın.
+3. Scheme olarak **MacScrollFix**, hedef aygıt olarak **My Mac** seçin.
 4. **Run** düğmesine basın veya `Command + R` kullanın.
 5. Menü çubuğundaki mouse simgesini bulun.
-
-İlk derlemede imzalama uyarısı görülürse **TARGETS > ScrollFix > Signing &
-Capabilities** bölümünden kendi Apple hesabınıza ait bir **Team** seçebilirsiniz.
-Yerel geliştirme için ücretli Apple Developer üyeliği gerekmez.
 
 Komut satırından kod imzası olmadan Debug derlemesi almak için:
 
 ```sh
 xcodebuild \
-  -project ScrollFix.xcodeproj \
-  -scheme ScrollFix \
+  -project MacScrollFix.xcodeproj \
+  -scheme MacScrollFix \
   -configuration Debug \
   -destination 'platform=macOS' \
   -derivedDataPath build/DerivedData \
@@ -73,7 +93,8 @@ uygulamayı `/Applications` klasörüne kopyalayın.
 Menü çubuğundaki MacScrollFix simgesine tıklayın:
 
 - **Mouse Scroll Düzeltme:** Özelliği açar veya kapatır.
-- **Aktif / Kapalı:** Düzeltmenin mevcut çalışma durumunu gösterir.
+- **Aktif / Kapalı:** Düzeltmenin mevcut çalışma durumunu ve gerekiyorsa eksik
+  Erişilebilirlik iznini gösterir.
 - **Girişte Başlat:** MacScrollFix'i kullanıcı oturumu açıldığında başlatır.
 - **Erişilebilirlik Ayarlarını Aç:** Gerekli macOS izin sayfasını açar.
 - **MacScrollFix'ten Çık:** Event tap'i temizleyerek uygulamayı kapatır.
@@ -86,10 +107,10 @@ olduğunu veya iznin eksik olduğunu gösterir.
 MacScrollFix, sistem genelindeki scroll olaylarını değiştirmek için macOS
 **Erişilebilirlik (Accessibility)** iznine ihtiyaç duyar.
 
-1. MacScrollFix'i ilk kez çalıştırın.
-2. İzin açıklamasındaki **Ayarları Aç** düğmesine basın.
-3. **Sistem Ayarları > Gizlilik ve Güvenlik > Erişilebilirlik** bölümünü açın.
-4. MacScrollFix'i etkinleştirin.
+1. MacScrollFix'i ilk kez çalıştırın ve macOS izin isteğini onaylayın.
+2. Gerekirse menüden **Erişilebilirlik Ayarlarını Aç** seçeneğine basın.
+3. **Sistem Ayarları > Gizlilik ve Güvenlik > Erişilebilirlik** bölümünde
+   MacScrollFix'i etkinleştirin.
 
 Listede görünmüyorsa `+` düğmesiyle `MacScrollFix.app` dosyasını ekleyin. Uygulamayı
 yeniden derledikten veya başka bir klasöre taşıdıktan sonra macOS izni tekrar
@@ -114,6 +135,10 @@ Olayın diğer özellikleri korunur. Global event değiştirme sandbox içinde g
 biçimde çalışmadığı için **App Sandbox** bilinçli olarak kapalıdır; uygulama yine de
 yalnızca scroll olaylarını yerel olarak işler.
 
+Tap'in kurulmuş görünmesi tek başına yeterli kabul edilmez. MacScrollFix tap'in
+geçerli ve etkin olduğunu düzenli olarak kontrol eder; sağlıksızsa eski kaynağı
+tamamen temizleyip yalnızca bir yeni tap oluşturur.
+
 ## Kullanılan teknolojiler
 
 - Swift
@@ -128,16 +153,15 @@ yalnızca scroll olaylarını yerel olarak işler.
 ## Proje yapısı
 
 ```text
-ScrollFix.xcodeproj/                 Xcode proje ve paylaşılan scheme dosyaları
-ScrollFix/
-├── ScrollFixApp.swift               Menü çubuğu arayüzü ve uygulama yaşam döngüsü
-├── ScrollFixModel.swift             Durum, izin ve Launch at Login yönetimi
-├── EventTapManager.swift            Global CGEventTap kurulumu ve temizliği
-├── ScrollEventTransformer.swift     Discrete/continuous ayrımı ve delta dönüşümü
-├── AppIcon.icon/                    Modern macOS uygulama ikonu
-├── Info.plist                       Uygulama bundle ayarları
-└── ScrollFix.entitlements           Entitlement yapılandırması
-ScrollFixTests/
+MacScrollFix.xcodeproj/                 Xcode proje ve paylaşılan scheme dosyaları
+MacScrollFix/
+├── MacScrollFixApp.swift               Menü çubuğu arayüzü ve uygulama yaşam döngüsü
+├── MacScrollFixModel.swift             Durum, izin ve Launch at Login yönetimi
+├── EventTapManager.swift             Global CGEventTap kurulumu ve temizliği
+├── ScrollEventTransformer.swift      Discrete/continuous ayrımı ve delta dönüşümü
+├── AppIcon.icon/                     Modern macOS uygulama ikonu
+└── Info.plist                        Uygulama bundle ayarları
+MacScrollFixTests/
 └── ScrollEventTransformerTests.swift
 ```
 
@@ -147,8 +171,8 @@ Xcode'da `Command + U` kullanabilir veya terminalde şu komutu çalıştırabili
 
 ```sh
 xcodebuild \
-  -project ScrollFix.xcodeproj \
-  -scheme ScrollFix \
+  -project MacScrollFix.xcodeproj \
+  -scheme MacScrollFix \
   -configuration Debug \
   -destination 'platform=macOS' \
   -derivedDataPath build/DerivedData \
@@ -156,9 +180,10 @@ xcodebuild \
   test
 ```
 
-Birim testleri discrete dikey/yatay delta dönüşümünü, continuous olayların
-değişmeden geçmesini ve olay sınıflandırmasını doğrular. Gerçek mouse, trackpad,
-Safari, Finder ve Chrome davranışı ayrıca elle test edilmelidir.
+Birim testleri discrete dikey/yatay/üçüncü eksen delta dönüşümünü, continuous
+olayların değişmeden geçmesini, olay sınıflandırmasını ve çift dönüşümün özgün
+değerleri geri getirmesini doğrular. Gerçek mouse, trackpad, Safari, Finder ve
+Chrome davranışı ayrıca elle test edilmelidir.
 
 ## Gizlilik
 
@@ -168,6 +193,7 @@ MacScrollFix:
 - Kullanıcı hesabı veya uzak servis içermez.
 - Kullanıcı verisi toplamaz, saklamaz veya paylaşmaz.
 - Scroll olaylarını yalnızca cihaz üzerinde (**on-device**) ve anlık olarak işler.
+- Yerel teknik günlükler scroll değerlerini veya kullanıcı içeriğini kaydetmez.
 - macOS'in genel Natural Scrolling ayarını değiştirmez.
 
 ## Bilinen sınırlamalar

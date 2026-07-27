@@ -9,8 +9,8 @@
       "layers" : [
         {
           "hidden" : false,
-          "image-name" : "ScrollFixIcon.png",
-          "name" : "ScrollFixIcon",
+          "image-name" : "MacScrollFixIcon.png",
+          "name" : "MacScrollFixIcon",
           "opacity" : 1
         }
       ],

@@ -7,10 +7,10 @@ uygulamasıdır; değişikliklerin mevcut davranışı ve trackpad güvenliğini
 ## Geliştirme ortamı
 
 - macOS 13 veya daha yeni bir sürüm
-- Xcode 14 veya daha yeni bir sürüm
+- Xcode 26 veya daha yeni bir sürüm
 - Üçüncü taraf bağımlılık gerekmez
 
-Projeyi `ScrollFix.xcodeproj` ile açın ve **ScrollFix** scheme'ini kullanın.
+Projeyi `MacScrollFix.xcodeproj` ile açın ve **MacScrollFix** scheme'ini kullanın.
 
 ## Katkı akışı
 
@@ -26,8 +26,8 @@ Projeyi `ScrollFix.xcodeproj` ile açın ve **ScrollFix** scheme'ini kullanın.
 
 ```sh
 xcodebuild \
-  -project ScrollFix.xcodeproj \
-  -scheme ScrollFix \
+  -project MacScrollFix.xcodeproj \
+  -scheme MacScrollFix \
   -configuration Debug \
   -destination 'platform=macOS' \
   -derivedDataPath build/DerivedData \
@@ -35,8 +35,8 @@ xcodebuild \
   build
 
 xcodebuild \
-  -project ScrollFix.xcodeproj \
-  -scheme ScrollFix \
+  -project MacScrollFix.xcodeproj \
+  -scheme MacScrollFix \
   -configuration Release \
   -destination 'platform=macOS' \
   -derivedDataPath build/DerivedData \
@@ -44,8 +44,8 @@ xcodebuild \
   build
 
 xcodebuild \
-  -project ScrollFix.xcodeproj \
-  -scheme ScrollFix \
+  -project MacScrollFix.xcodeproj \
+  -scheme MacScrollFix \
   -configuration Debug \
   -destination 'platform=macOS' \
   -derivedDataPath build/DerivedData \

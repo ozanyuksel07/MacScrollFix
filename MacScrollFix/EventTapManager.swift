@@ -1,20 +1,46 @@
 import ApplicationServices
+import Foundation
+import OSLog
 
 final class EventTapManager {
     private(set) var isInstalled = false
 
+    var isOperational: Bool {
+        guard
+            shouldProcessEvents,
+            isInstalled,
+            let eventTap,
+            CFMachPortIsValid(eventTap)
+        else {
+            return false
+        }
+        return CGEvent.tapIsEnabled(tap: eventTap)
+    }
+
     private var eventTap: CFMachPort?
     private var runLoopSource: CFRunLoopSource?
     private var shouldProcessEvents = false
+    private let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier ?? "com.ozanyuksel.MacScrollFix",
+        category: "EventTap"
+    )
 
     @discardableResult
     func start() -> Bool {
-        if isInstalled {
-            shouldProcessEvents = true
+        shouldProcessEvents = true
+
+        if isOperational {
             return true
         }
 
+        // Kurulu görünen fakat sistem tarafından geçersiz hâle gelmiş bir tap
+        // varsa önce tamamen temizleriz. Böylece aynı anda ikinci tap oluşmaz.
+        if isInstalled || eventTap != nil || runLoopSource != nil {
+            tearDown()
+        }
+
         guard AXIsProcessTrusted() else {
+            logger.notice("Erişilebilirlik izni olmadığı için event tap başlatılmadı.")
             return false
         }
 
@@ -39,6 +65,7 @@ final class EventTapManager {
             callback: callback,
             userInfo: Unmanaged.passUnretained(self).toOpaque()
         ) else {
+            logger.error("CGEventTap oluşturulamadı.")
             return false
         }
 
@@ -48,6 +75,7 @@ final class EventTapManager {
             0
         ) else {
             CFMachPortInvalidate(newTap)
+            logger.error("Event tap run loop kaynağı oluşturulamadı.")
             return false
         }
 
@@ -58,12 +86,36 @@ final class EventTapManager {
 
         CFRunLoopAddSource(CFRunLoopGetMain(), newSource, .commonModes)
         CGEvent.tapEnable(tap: newTap, enable: true)
+
+        guard isOperational else {
+            logger.error("Event tap oluşturuldu ancak etkinleştirilemedi.")
+            tearDown()
+            return false
+        }
+
+        logger.info("Scroll event tap etkinleştirildi.")
         return true
     }
 
     func stop() {
         shouldProcessEvents = false
+        tearDown()
+    }
 
+    @discardableResult
+    func restoreIfNeeded() -> Bool {
+        guard shouldProcessEvents else {
+            return false
+        }
+        if isOperational {
+            return true
+        }
+
+        logger.notice("Event tap sağlıksız; güvenli biçimde yeniden kuruluyor.")
+        return start()
+    }
+
+    private func tearDown() {
         if let eventTap {
             CGEvent.tapEnable(tap: eventTap, enable: false)
         }
@@ -85,6 +137,11 @@ final class EventTapManager {
         if type == .tapDisabledByTimeout || type == .tapDisabledByUserInput {
             if shouldProcessEvents, let eventTap {
                 CGEvent.tapEnable(tap: eventTap, enable: true)
+                if !CGEvent.tapIsEnabled(tap: eventTap) {
+                    DispatchQueue.main.async { [weak self] in
+                        _ = self?.restoreIfNeeded()
+                    }
+                }
             }
             return Unmanaged.passUnretained(event)
         }

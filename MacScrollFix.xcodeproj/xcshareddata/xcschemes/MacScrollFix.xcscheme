@@ -17,8 +17,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A50000000000000000000001"
                BuildableName = "MacScrollFix.app"
-               BlueprintName = "ScrollFix"
-               ReferencedContainer = "container:ScrollFix.xcodeproj">
+               BlueprintName = "MacScrollFix"
+               ReferencedContainer = "container:MacScrollFix.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -30,9 +30,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A50000000000000000000002"
-               BuildableName = "ScrollFixTests.xctest"
-               BlueprintName = "ScrollFixTests"
-               ReferencedContainer = "container:ScrollFix.xcodeproj">
+               BuildableName = "MacScrollFixTests.xctest"
+               BlueprintName = "MacScrollFixTests"
+               ReferencedContainer = "container:MacScrollFix.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -50,9 +50,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A50000000000000000000002"
-               BuildableName = "ScrollFixTests.xctest"
-               BlueprintName = "ScrollFixTests"
-               ReferencedContainer = "container:ScrollFix.xcodeproj">
+               BuildableName = "MacScrollFixTests.xctest"
+               BlueprintName = "MacScrollFixTests"
+               ReferencedContainer = "container:MacScrollFix.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -73,8 +73,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A50000000000000000000001"
             BuildableName = "MacScrollFix.app"
-            BlueprintName = "ScrollFix"
-            ReferencedContainer = "container:ScrollFix.xcodeproj">
+            BlueprintName = "MacScrollFix"
+            ReferencedContainer = "container:MacScrollFix.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -90,8 +90,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A50000000000000000000001"
             BuildableName = "MacScrollFix.app"
-            BlueprintName = "ScrollFix"
-            ReferencedContainer = "container:ScrollFix.xcodeproj">
+            BlueprintName = "MacScrollFix"
+            ReferencedContainer = "container:MacScrollFix.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
