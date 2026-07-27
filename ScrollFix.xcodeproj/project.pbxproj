@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		750E99893017A24E00D708F4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 750E99883017A24E00D708F4 /* Assets.xcassets */; };
+		750E99893017A24E00D708F4 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 750E99883017A24E00D708F4 /* AppIcon.icon */; };
 		A10000000000000000000001 /* ScrollFixApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000001 /* ScrollFixApp.swift */; };
 		A10000000000000000000002 /* ScrollFixModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000002 /* ScrollFixModel.swift */; };
 		A10000000000000000000003 /* EventTapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000003 /* EventTapManager.swift */; };
@@ -28,7 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		750E99883017A24E00D708F4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		750E99883017A24E00D708F4 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		A20000000000000000000001 /* ScrollFixApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollFixApp.swift; sourceTree = "<group>"; };
 		A20000000000000000000002 /* ScrollFixModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollFixModel.swift; sourceTree = "<group>"; };
 		A20000000000000000000003 /* EventTapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTapManager.swift; sourceTree = "<group>"; };
@@ -83,7 +83,7 @@
 				A20000000000000000000004 /* ScrollEventTransformer.swift */,
 				A20000000000000000000005 /* Info.plist */,
 				A20000000000000000000006 /* ScrollFix.entitlements */,
-				750E99883017A24E00D708F4 /* Assets.xcassets */,
+				750E99883017A24E00D708F4 /* AppIcon.icon */,
 			);
 			path = ScrollFix;
 			sourceTree = "<group>";
@@ -195,7 +195,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				750E99893017A24E00D708F4 /* Assets.xcassets in Resources */,
+				750E99893017A24E00D708F4 /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
