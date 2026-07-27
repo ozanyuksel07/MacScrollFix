@@ -1,0 +1,35 @@
+# macOS metadata
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Xcode user-specific data and caches
+DerivedData/
+build/
+.build/
+xcuserdata/
+*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+
+# Generated applications, symbols, and archives
+*.app
+*.dSYM
+*.dSYM.zip
+*.xcarchive
+
+# Local environment and signing material
+.env
+.env.*
+!.env.example
+*.p12
+*.pfx
+*.mobileprovision
+*.provisionprofile
+
+# Temporary editor files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
