@@ -1,6 +1,6 @@
-# ScrollFix'e Katkıda Bulunma
+# MacScrollFix'e Katkıda Bulunma
 
-Katkınız için teşekkürler. ScrollFix küçük ve odaklı bir macOS yardımcı
+Katkınız için teşekkürler. MacScrollFix küçük ve odaklı bir macOS yardımcı
 uygulamasıdır; değişikliklerin mevcut davranışı ve trackpad güvenliğini koruması
 önemlidir.
 

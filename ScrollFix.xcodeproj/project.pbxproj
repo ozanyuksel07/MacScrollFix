@@ -36,7 +36,7 @@
 		A20000000000000000000005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A20000000000000000000006 /* ScrollFix.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ScrollFix.entitlements; sourceTree = "<group>"; };
 		A20000000000000000000007 /* ScrollEventTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollEventTransformerTests.swift; sourceTree = "<group>"; };
-		A20000000000000000000008 /* ScrollFix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrollFix.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A20000000000000000000008 /* MacScrollFix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacScrollFix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A20000000000000000000009 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		A2000000000000000000000A /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		A2000000000000000000000B /* ScrollFixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrollFixTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,7 +108,7 @@
 		A70000000000000000000005 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A20000000000000000000008 /* ScrollFix.app */,
+				A20000000000000000000008 /* MacScrollFix.app */,
 				A2000000000000000000000B /* ScrollFixTests.xctest */,
 			);
 			name = Products;
@@ -130,8 +130,8 @@
 			dependencies = (
 			);
 			name = ScrollFix;
-			productName = ScrollFix;
-			productReference = A20000000000000000000008 /* ScrollFix.app */;
+			productName = MacScrollFix;
+			productReference = A20000000000000000000008 /* MacScrollFix.app */;
 			productType = "com.apple.product-type.application";
 		};
 		A50000000000000000000002 /* ScrollFixTests */ = {
@@ -367,7 +367,8 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ozanyuksel.ScrollFix;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = ScrollFix;
+				PRODUCT_NAME = MacScrollFix;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -391,7 +392,8 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ozanyuksel.ScrollFix;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = ScrollFix;
+				PRODUCT_NAME = MacScrollFix;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -408,7 +410,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ScrollFix.app/Contents/MacOS/ScrollFix";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MacScrollFix.app/Contents/MacOS/MacScrollFix";
 			};
 			name = Debug;
 		};
@@ -423,7 +425,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ScrollFix.app/Contents/MacOS/ScrollFix";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MacScrollFix.app/Contents/MacOS/MacScrollFix";
 			};
 			name = Release;
 		};

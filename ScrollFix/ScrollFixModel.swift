@@ -100,7 +100,7 @@ final class ScrollFixModel: ObservableObject {
         if SMAppService.mainApp.status == .requiresApproval {
             showAlert(
                 title: "Onay Gerekiyor",
-                message: "ScrollFix’i girişte başlatmak için Sistem Ayarları > Genel > Giriş Öğeleri bölümünde uygulamaya izin verin."
+                message: "MacScrollFix’i girişte başlatmak için Sistem Ayarları > Genel > Giriş Öğeleri bölümünde uygulamaya izin verin."
             )
         }
     }
@@ -179,7 +179,7 @@ final class ScrollFixModel: ObservableObject {
         alert.alertStyle = .informational
         alert.messageText = "Erişilebilirlik İzni Gerekli"
         alert.informativeText = """
-        ScrollFix yalnızca harici mouse tekerleği olaylarını düzeltebilmek için Erişilebilirlik iznine ihtiyaç duyar. İzin verilene kadar özellik kapalı kalır.
+        MacScrollFix yalnızca harici mouse tekerleği olaylarını düzeltebilmek için Erişilebilirlik iznine ihtiyaç duyar. İzin verilene kadar özellik kapalı kalır.
         """
         alert.addButton(withTitle: "Ayarları Aç")
         alert.addButton(withTitle: "Daha Sonra")

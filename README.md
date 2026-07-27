@@ -1,10 +1,10 @@
-# ScrollFix
+# MacScrollFix
 
 <p align="center">
-  <img src="ScrollFix/Assets.xcassets/AppIcon.appiconset/icon_512x512@2x.png" alt="ScrollFix uygulama ikonu" width="180">
+  <img src="ScrollFix/AppIcon.icon/Assets/ScrollFixIcon.png" alt="MacScrollFix uygulama ikonu" width="180">
 </p>
 
-ScrollFix, standart USB veya Bluetooth mouse tekerleğini Windows'taki alışılmış
+MacScrollFix, standart USB veya Bluetooth mouse tekerleğini Windows'taki alışılmış
 yönde kullanmayı sağlayan, küçük ve tamamen yerel bir macOS menü çubuğu
 uygulamasıdır. Harici mouse kaydırma yönünü düzeltirken MacBook trackpad
 hareketlerini değiştirmez.
@@ -14,7 +14,7 @@ hareketlerini değiştirmez.
 macOS'in **Doğal kaydırma (Natural Scrolling)** ayarı trackpad için kullanışlıdır,
 ancak aynı ayar standart bir mouse tekerleğini Windows'tan alışık olunan yönün
 tersinde hissettirebilir. Sistem ayarını kapatmak trackpad davranışını da
-değiştirdiği için ScrollFix farklı bir yaklaşım kullanır:
+değiştirdiği için MacScrollFix farklı bir yaklaşım kullanır:
 
 - Standart mouse'tan gelen kesikli (**discrete**) scroll olaylarını tersine çevirir.
 - Trackpad'den gelen sürekli (**continuous**) scroll olaylarını değiştirmeden geçirir.
@@ -65,33 +65,33 @@ xcodebuild \
 ```
 
 Derlenen `.app` dosyasını kalıcı kullanmak için Xcode'daki **Products >
-ScrollFix.app** öğesine sağ tıklayın, **Show in Finder** seçeneğini kullanın ve
+MacScrollFix.app** öğesine sağ tıklayın, **Show in Finder** seçeneğini kullanın ve
 uygulamayı `/Applications` klasörüne kopyalayın.
 
 ## Kullanım
 
-Menü çubuğundaki ScrollFix simgesine tıklayın:
+Menü çubuğundaki MacScrollFix simgesine tıklayın:
 
 - **Mouse Scroll Düzeltme:** Özelliği açar veya kapatır.
 - **Aktif / Kapalı:** Düzeltmenin mevcut çalışma durumunu gösterir.
-- **Girişte Başlat:** ScrollFix'i kullanıcı oturumu açıldığında başlatır.
+- **Girişte Başlat:** MacScrollFix'i kullanıcı oturumu açıldığında başlatır.
 - **Erişilebilirlik Ayarlarını Aç:** Gerekli macOS izin sayfasını açar.
-- **ScrollFix'ten Çık:** Event tap'i temizleyerek uygulamayı kapatır.
+- **MacScrollFix'ten Çık:** Event tap'i temizleyerek uygulamayı kapatır.
 
 Dolu mouse simgesi düzeltmenin çalıştığını, soluk ve boş simge ise özelliğin kapalı
 olduğunu veya iznin eksik olduğunu gösterir.
 
 ## Erişilebilirlik izni
 
-ScrollFix, sistem genelindeki scroll olaylarını değiştirmek için macOS
+MacScrollFix, sistem genelindeki scroll olaylarını değiştirmek için macOS
 **Erişilebilirlik (Accessibility)** iznine ihtiyaç duyar.
 
-1. ScrollFix'i ilk kez çalıştırın.
+1. MacScrollFix'i ilk kez çalıştırın.
 2. İzin açıklamasındaki **Ayarları Aç** düğmesine basın.
 3. **Sistem Ayarları > Gizlilik ve Güvenlik > Erişilebilirlik** bölümünü açın.
-4. ScrollFix'i etkinleştirin.
+4. MacScrollFix'i etkinleştirin.
 
-Listede görünmüyorsa `+` düğmesiyle `ScrollFix.app` dosyasını ekleyin. Uygulamayı
+Listede görünmüyorsa `+` düğmesiyle `MacScrollFix.app` dosyasını ekleyin. Uygulamayı
 yeniden derledikten veya başka bir klasöre taşıdıktan sonra macOS izni tekrar
 isteyebilir.
 
@@ -99,11 +99,11 @@ isteyebilir.
 
 Menüdeki **Girişte Başlat** seçeneği macOS 13 ve sonrasındaki
 `SMAppService.mainApp` API'sini kullanır. macOS ek onay isterse
-**Sistem Ayarları > Genel > Giriş Öğeleri** bölümünden ScrollFix'e izin verin.
+**Sistem Ayarları > Genel > Giriş Öğeleri** bölümünden MacScrollFix'e izin verin.
 
 ## Teknik çalışma şekli
 
-ScrollFix, Core Graphics `CGEventTap` ile yalnızca `scrollWheel` olaylarını yakalar:
+MacScrollFix, Core Graphics `CGEventTap` ile yalnızca `scrollWheel` olaylarını yakalar:
 
 - `scrollWheelEventIsContinuous == 0`: Standart fiziksel mouse kabul edilir ve
   dikey/yatay delta alanları tersine çevrilir.
@@ -134,7 +134,7 @@ ScrollFix/
 ├── ScrollFixModel.swift             Durum, izin ve Launch at Login yönetimi
 ├── EventTapManager.swift            Global CGEventTap kurulumu ve temizliği
 ├── ScrollEventTransformer.swift     Discrete/continuous ayrımı ve delta dönüşümü
-├── Assets.xcassets/                 AppIcon kaynakları
+├── AppIcon.icon/                    Modern macOS uygulama ikonu
 ├── Info.plist                       Uygulama bundle ayarları
 └── ScrollFix.entitlements           Entitlement yapılandırması
 ScrollFixTests/
@@ -162,7 +162,7 @@ Safari, Finder ve Chrome davranışı ayrıca elle test edilmelidir.
 
 ## Gizlilik
 
-ScrollFix:
+MacScrollFix:
 
 - İnternet bağlantısı kullanmaz.
 - Kullanıcı hesabı veya uzak servis içermez.

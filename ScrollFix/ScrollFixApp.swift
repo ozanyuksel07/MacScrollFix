@@ -34,7 +34,7 @@ struct ScrollFixApp: App {
 
             Divider()
 
-            Button("ScrollFix’ten Çık") {
+            Button("MacScrollFix’ten Çık") {
                 NSApplication.shared.terminate(nil)
             }
             .keyboardShortcut("q")
@@ -42,7 +42,7 @@ struct ScrollFixApp: App {
             Image(systemName: model.isOperational ? "computermouse.fill" : "computermouse")
                 .symbolRenderingMode(.monochrome)
                 .opacity(model.isOperational ? 1 : 0.45)
-                .accessibilityLabel(model.isOperational ? "ScrollFix aktif" : "ScrollFix kapalı")
+                .accessibilityLabel(model.isOperational ? "MacScrollFix aktif" : "MacScrollFix kapalı")
         }
         .menuBarExtraStyle(.menu)
     }
