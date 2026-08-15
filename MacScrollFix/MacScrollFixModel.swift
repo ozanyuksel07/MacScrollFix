@@ -4,34 +4,53 @@ import Combine
 import OSLog
 import ServiceManagement
 
+enum LaunchAtLoginState: Equatable {
+    case disabled
+    case enabled
+    case requiresApproval
+    case unavailable
+
+    var isToggleOn: Bool {
+        self == .enabled || self == .requiresApproval
+    }
+
+    var secondaryText: String? {
+        switch self {
+        case .requiresApproval:
+            return "macOS onayı gerekiyor"
+        case .unavailable:
+            return "Girişte başlatma kullanılamıyor"
+        case .disabled, .enabled:
+            return nil
+        }
+    }
+}
+
 @MainActor
 final class MacScrollFixModel: ObservableObject {
     static let shared = MacScrollFixModel()
 
     @Published private(set) var isEnabled: Bool
     @Published private(set) var accessibilityGranted: Bool
-    @Published private(set) var launchAtLogin: Bool
+    @Published private(set) var launchAtLoginState: LaunchAtLoginState
+    @Published private(set) var menuBarIconVisible: Bool
 
     var isOperational: Bool {
         isEnabled && accessibilityGranted && eventTapManager.isOperational
     }
 
     var statusText: String {
-        if isOperational {
-            return "Aktif"
-        }
-        if !accessibilityGranted {
-            return "Kapalı · Erişilebilirlik izni gerekli"
-        }
-        if isEnabled {
-            return "Kapalı · Yeniden bağlanıyor"
-        }
-        return "Kapalı"
+        Self.statusText(
+            isEnabled: isEnabled,
+            accessibilityGranted: accessibilityGranted,
+            isOperational: isOperational
+        )
     }
 
     private enum DefaultsKey {
         static let correctionEnabled = "mouseScrollCorrectionEnabled"
         static let didRequestAccessibility = "didRequestAccessibility"
+        static let menuBarIconHidden = "menuBarIconHidden"
     }
 
     private let defaults: UserDefaults
@@ -44,7 +63,7 @@ final class MacScrollFixModel: ObservableObject {
     private var hasStarted = false
     private var isShowingAlert = false
 
-    private init(defaults: UserDefaults = .standard) {
+    init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
 
         if defaults.object(forKey: DefaultsKey.correctionEnabled) == nil {
@@ -54,7 +73,8 @@ final class MacScrollFixModel: ObservableObject {
         }
 
         accessibilityGranted = AXIsProcessTrusted()
-        launchAtLogin = Self.isLoginItemEnabled
+        launchAtLoginState = Self.launchAtLoginState(for: SMAppService.mainApp.status)
+        menuBarIconVisible = !defaults.bool(forKey: DefaultsKey.menuBarIconHidden)
     }
 
     func applicationDidFinishLaunching() {
@@ -75,14 +95,6 @@ final class MacScrollFixModel: ObservableObject {
 
         synchronizeEventTap()
         startPermissionMonitoring()
-
-        // İlk çalıştırmada macOS zaten kendi izin penceresini gösterir. Aynı anda
-        // ikinci bir pencere açmamak için özel açıklamayı sonraki açılışlara bırakırız.
-        if !accessibilityGranted && !shouldRequestAccessibility {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
-                self?.showAccessibilityExplanation()
-            }
-        }
     }
 
     func setEnabled(_ enabled: Bool) {
@@ -93,9 +105,6 @@ final class MacScrollFixModel: ObservableObject {
 
         if enabled {
             accessibilityGranted = Self.checkAccessibility(prompt: false)
-            if !accessibilityGranted {
-                showAccessibilityExplanation()
-            }
         }
 
         synchronizeEventTap()
@@ -117,14 +126,43 @@ final class MacScrollFixModel: ObservableObject {
             )
         }
 
-        launchAtLogin = Self.isLoginItemEnabled
+        launchAtLoginState = Self.launchAtLoginState(for: SMAppService.mainApp.status)
+    }
 
-        if SMAppService.mainApp.status == .requiresApproval {
-            showAlert(
-                title: "Onay Gerekiyor",
-                message: "MacScrollFix’i girişte başlatmak için Sistem Ayarları > Genel > Giriş Öğeleri bölümünde uygulamaya izin verin."
-            )
+    func setMenuBarIconVisible(_ isVisible: Bool) {
+        guard menuBarIconVisible != isVisible else { return }
+
+        defaults.set(!isVisible, forKey: DefaultsKey.menuBarIconHidden)
+        menuBarIconVisible = isVisible
+    }
+
+    func hideMenuBarIcon() {
+        setMenuBarIconVisible(false)
+    }
+
+    func requestMenuBarIconHide() {
+        guard !isShowingAlert else { return }
+        isShowingAlert = true
+        defer { isShowingAlert = false }
+
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.messageText = "Menü çubuğu simgesi gizlensin mi?"
+        alert.informativeText = "MacScrollFix arka planda çalışmaya devam eder. Simgeyi geri getirmek için Uygulamalar klasöründen MacScrollFix’i tekrar açabilirsin. Simge, Mac yeniden başlatıldığında da gizli kalır."
+        alert.addButton(withTitle: "Gizle")
+        alert.addButton(withTitle: "Vazgeç")
+
+        NSApplication.shared.activate(ignoringOtherApps: true)
+        guard alert.runModal() == .alertFirstButtonReturn else { return }
+
+        // Alert'in modal döngüsü tamamlandıktan sonra MenuBarExtra'yı güncelle.
+        DispatchQueue.main.async { [weak self] in
+            self?.hideMenuBarIcon()
         }
+    }
+
+    func showMenuBarIcon() {
+        setMenuBarIconVisible(true)
     }
 
     func openAccessibilitySettings() {
@@ -144,9 +182,35 @@ final class MacScrollFixModel: ObservableObject {
         logger.info("MacScrollFix güvenli biçimde kapatıldı.")
     }
 
-    private static var isLoginItemEnabled: Bool {
-        let status = SMAppService.mainApp.status
-        return status == .enabled || status == .requiresApproval
+    nonisolated static func statusText(
+        isEnabled: Bool,
+        accessibilityGranted: Bool,
+        isOperational: Bool
+    ) -> String {
+        guard isEnabled else {
+            return "Pasif"
+        }
+        guard accessibilityGranted else {
+            return "Erişilebilirlik izni gerekli"
+        }
+        return isOperational ? "Aktif" : "Yeniden bağlanıyor…"
+    }
+
+    nonisolated static func launchAtLoginState(
+        for status: SMAppService.Status
+    ) -> LaunchAtLoginState {
+        switch status {
+        case .enabled:
+            return .enabled
+        case .requiresApproval:
+            return .requiresApproval
+        case .notRegistered:
+            return .disabled
+        case .notFound:
+            return .unavailable
+        @unknown default:
+            return .unavailable
+        }
     }
 
     private static func checkAccessibility(prompt: Bool) -> Bool {
@@ -187,9 +251,9 @@ final class MacScrollFixModel: ObservableObject {
             }
         }
 
-        let loginItemEnabledNow = Self.isLoginItemEnabled
-        if loginItemEnabledNow != launchAtLogin {
-            launchAtLogin = loginItemEnabledNow
+        let launchAtLoginStateNow = Self.launchAtLoginState(for: SMAppService.mainApp.status)
+        if launchAtLoginStateNow != launchAtLoginState {
+            launchAtLoginState = launchAtLoginStateNow
         }
     }
 
@@ -204,26 +268,6 @@ final class MacScrollFixModel: ObservableObject {
 
         // isOperational, event tap kurulum sonucuna da bağlı bir computed property'dir.
         objectWillChange.send()
-    }
-
-    private func showAccessibilityExplanation() {
-        guard !accessibilityGranted, !isShowingAlert else { return }
-        isShowingAlert = true
-        defer { isShowingAlert = false }
-
-        let alert = NSAlert()
-        alert.alertStyle = .informational
-        alert.messageText = "Erişilebilirlik İzni Gerekli"
-        alert.informativeText = """
-        MacScrollFix yalnızca harici mouse tekerleği olaylarını düzeltebilmek için Erişilebilirlik iznine ihtiyaç duyar. İzin verilene kadar özellik kapalı kalır.
-        """
-        alert.addButton(withTitle: "Ayarları Aç")
-        alert.addButton(withTitle: "Daha Sonra")
-
-        NSApplication.shared.activate(ignoringOtherApps: true)
-        if alert.runModal() == .alertFirstButtonReturn {
-            openAccessibilitySettings()
-        }
     }
 
     private func showAlert(title: String, message: String) {

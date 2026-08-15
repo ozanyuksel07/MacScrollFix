@@ -7,9 +7,16 @@ struct MacScrollFixApp: App {
     @StateObject private var model = MacScrollFixModel.shared
 
     var body: some Scene {
-        MenuBarExtra {
+        MenuBarExtra(
+            isInserted: Binding(
+                get: { model.menuBarIconVisible },
+                set: { isVisible in
+                    model.setMenuBarIconVisible(isVisible)
+                }
+            )
+        ) {
             Toggle(
-                "Mouse Scroll Düzeltme",
+                "Kaydırma Düzeltmesi",
                 isOn: Binding(
                     get: { model.isEnabled },
                     set: { model.setEnabled($0) }
@@ -24,18 +31,29 @@ struct MacScrollFixApp: App {
             Toggle(
                 "Girişte Başlat",
                 isOn: Binding(
-                    get: { model.launchAtLogin },
+                    get: { model.launchAtLoginState.isToggleOn },
                     set: { model.setLaunchAtLogin($0) }
                 )
             )
 
-            Button("Erişilebilirlik Ayarlarını Aç") {
-                model.openAccessibilitySettings()
+            if let secondaryText = model.launchAtLoginState.secondaryText {
+                Text(secondaryText)
+                    .foregroundStyle(.secondary)
             }
 
             Divider()
 
-            Button("MacScrollFix’ten Çık") {
+            Button("Erişilebilirlik Ayarları…") {
+                model.openAccessibilitySettings()
+            }
+
+            Button("Menü Çubuğundan Gizle") {
+                model.requestMenuBarIconHide()
+            }
+
+            Divider()
+
+            Button("Çıkış") {
                 NSApplication.shared.terminate(nil)
             }
             .keyboardShortcut("q")
@@ -56,5 +74,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ notification: Notification) {
         MacScrollFixModel.shared.shutdown()
+    }
+
+    func applicationShouldHandleReopen(
+        _ sender: NSApplication,
+        hasVisibleWindows flag: Bool
+    ) -> Bool {
+        // AppKit'in reopen layout işlemi tamamlandıktan sonra MenuBarExtra'yı yeniden ekle.
+        DispatchQueue.main.async {
+            MacScrollFixModel.shared.showMenuBarIcon()
+        }
+        return true
     }
 }

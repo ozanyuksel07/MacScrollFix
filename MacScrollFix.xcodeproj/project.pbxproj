@@ -15,6 +15,7 @@
 		A10000000000000000000005 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A20000000000000000000009 /* ServiceManagement.framework */; };
 		A10000000000000000000006 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000A /* ApplicationServices.framework */; };
 		A10000000000000000000007 /* ScrollEventTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000007 /* ScrollEventTransformerTests.swift */; };
+		A10000000000000000000008 /* MacScrollFixModelStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000D /* MacScrollFixModelStateTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		A2000000000000000000000A /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		A2000000000000000000000B /* MacScrollFixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MacScrollFixTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2000000000000000000000C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		A2000000000000000000000D /* MacScrollFixModelStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacScrollFixModelStateTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				A20000000000000000000007 /* ScrollEventTransformerTests.swift */,
+				A2000000000000000000000D /* MacScrollFixModelStateTests.swift */,
 			);
 			path = MacScrollFixTests;
 			sourceTree = "<group>";
@@ -223,6 +226,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A10000000000000000000007 /* ScrollEventTransformerTests.swift in Sources */,
+				A10000000000000000000008 /* MacScrollFixModelStateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

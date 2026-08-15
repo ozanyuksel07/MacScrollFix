@@ -4,74 +4,38 @@
   <img src="MacScrollFix/AppIcon.icon/Assets/MacScrollFixIcon.png" alt="MacScrollFix uygulama ikonu" width="180">
 </p>
 
-MacScrollFix, standart USB veya Bluetooth mouse tekerleğini Windows'taki alışılmış
-yönde kullanmayı sağlayan, küçük ve tamamen yerel bir macOS menü çubuğu
-uygulamasıdır. Harici mouse kaydırma yönünü düzeltirken MacBook trackpad
-hareketlerini değiştirmez.
+MacScrollFix, standart USB veya Bluetooth mouse tekerleğinin yönünü Windows'taki
+alışılmış hisse göre düzeltmek için çalışan küçük, yerel bir macOS menü çubuğu
+uygulamasıdır. macOS'in genel Natural Scrolling ayarını değiştirmez.
 
-## Çözdüğü problem
+## What MacScrollFix does
 
-macOS'in **Doğal kaydırma (Natural Scrolling)** ayarı trackpad için kullanışlıdır,
-ancak aynı ayar standart bir mouse tekerleğini Windows'tan alışık olunan yönün
-tersinde hissettirebilir. Sistem ayarını kapatmak trackpad davranışını da
-değiştirdiği için MacScrollFix farklı bir yaklaşım kullanır:
-
-- Standart mouse'tan gelen kesikli (**discrete**) scroll olaylarını tersine çevirir.
-- Trackpad'den gelen sürekli (**continuous**) scroll olaylarını değiştirmeden geçirir.
-- macOS'in genel kaydırma ayarına dokunmaz.
-
-## Özellikler
-
-- Yalnızca harici, standart mouse tekerleği yönünü düzeltir.
-- Dikey ve yatay scroll deltalarını destekler.
-- Trackpad kaydırmasını değiştirmez.
-- Dock'ta görünmeden yalnızca menü çubuğunda çalışır.
-- Düzeltme özelliği menüden anında açılıp kapatılabilir.
-- Seçilen durum `UserDefaults` ile saklanır.
-- macOS 13+ için **Girişte Başlat (Launch at Login)** desteği sunar.
-- Erişilebilirlik iznini kontrol eder ve gerekli ayar sayfasını açabilir.
-- Event tap sistem tarafından kapatılır veya geçersiz hâle gelirse tek kopya
-  korunarak güvenli biçimde yeniden kurulur.
-- Sorun giderme için yalnızca macOS birleşik günlük sistemine yerel teknik kayıt
-  yazar; scroll içeriği kaydedilmez.
+- Harici mouse'lardan gelen kesikli (**discrete**) scroll olaylarının yönünü tersine çevirir.
+- Trackpad ve trackpad-benzeri aygıtlardan gelen sürekli (**continuous**) scroll olaylarına dokunmaz.
+- Dikey, yatay ve üçüncü eksen scroll deltalarını destekler.
 - İnternet bağlantısı veya üçüncü taraf bağımlılık kullanmaz.
 
-## Sistem gereksinimleri
+## Requirements
 
 - macOS 13 Ventura veya daha yeni bir sürüm
 - Xcode 26 veya daha yeni bir sürüm
+- Scroll olaylarını işlemek için macOS **Accessibility** izni
 - Standart tekerlekli USB veya Bluetooth mouse
 
-## GitHub'dan indirip kurma
+## Build & Run
 
-Bu proje Apple Developer ID sertifikası kullanmaz. Bu nedenle GitHub'dan alınan
-hazır bir uygulama macOS tarafından otomatik olarak güvenilir sayılmaz. En güvenli
-ücretsiz yöntem, kaynak kodunu Xcode ile kendi Mac'inizde derlemektir:
+Normal geliştirme akışı Apple hesabı veya Team seçimi gerektirmez:
 
-1. GitHub sayfasındaki **Code > Download ZIP** seçeneğine basın.
-2. İnen ZIP dosyasını çift tıklayarak açın.
-3. `MacScrollFix.xcodeproj` dosyasını çift tıklayın.
-4. Xcode'un üst kısmında scheme olarak **MacScrollFix**, aygıt olarak
-   **My Mac** seçildiğini kontrol edin.
-5. `Command + B` tuşlarına basarak uygulamayı derleyin.
-6. Xcode'un sol tarafındaki **Products > MacScrollFix.app** öğesine sağ tıklayıp
-   **Show in Finder** seçeneğine basın.
-7. `MacScrollFix.app` dosyasını **Applications (Uygulamalar)** klasörüne sürükleyin.
-8. Uygulamayı Applications klasöründen açın ve Erişilebilirlik iznini verin.
+1. Repoyu clone edin.
+2. `MacScrollFix.xcodeproj` dosyasını Xcode'da açın.
+3. Scheme olarak **MacScrollFix**, hedef olarak **My Mac** seçiliyken Run (`⌘R`) çalıştırın.
+4. İstendiğinde Accessibility iznini verin.
 
-Ücretsiz Apple hesabı yerel derleme için yeterlidir; ücretli Apple Developer
-üyeliği gerekmez. Xcode imzalama uyarısı gösterirse **TARGETS > MacScrollFix >
-Signing & Capabilities** bölümünden kişisel Apple hesabınıza ait **Team** seçilebilir.
+Uygulama çalıştığında menü çubuğunda mouse simgesi görünür. Uygulamayı kalıcı
+kullanmak isterseniz Xcode'da **Products > MacScrollFix.app > Show in Finder**
+ile uygulamayı bulun ve `/Applications` klasörüne taşıyın.
 
-## Xcode ile geliştirme
-
-1. Proje klasörünü Mac'inize indirin veya Git ile klonlayın.
-2. `MacScrollFix.xcodeproj` dosyasını Xcode ile açın.
-3. Scheme olarak **MacScrollFix**, hedef aygıt olarak **My Mac** seçin.
-4. **Run** düğmesine basın veya `Command + R` kullanın.
-5. Menü çubuğundaki mouse simgesini bulun.
-
-Komut satırından kod imzası olmadan Debug derlemesi almak için:
+Komut satırında, imzalama gerektirmeden Debug build almak için:
 
 ```sh
 xcodebuild \
@@ -84,90 +48,47 @@ xcodebuild \
   build
 ```
 
-Derlenen `.app` dosyasını kalıcı kullanmak için Xcode'daki **Products >
-MacScrollFix.app** öğesine sağ tıklayın, **Show in Finder** seçeneğini kullanın ve
-uygulamayı `/Applications` klasörüne kopyalayın.
+## Accessibility
 
-## Kullanım
+İlk kullanımda macOS izni onaylamanızı ister. İzin verilmemişse şu yolu izleyin:
 
-Menü çubuğundaki MacScrollFix simgesine tıklayın:
+1. **System Settings > Privacy & Security > Accessibility** bölümünü açın.
+2. **MacScrollFix**'i etkinleştirin.
+3. Uygulama izni düzenli olarak kontrol eder ve algıladığında düzeltmeyi etkinleştirir.
 
-- **Mouse Scroll Düzeltme:** Özelliği açar veya kapatır.
-- **Aktif / Kapalı:** Düzeltmenin mevcut çalışma durumunu ve gerekiyorsa eksik
-  Erişilebilirlik iznini gösterir.
-- **Girişte Başlat:** MacScrollFix'i kullanıcı oturumu açıldığında başlatır.
-- **Erişilebilirlik Ayarlarını Aç:** Gerekli macOS izin sayfasını açar.
-- **MacScrollFix'ten Çık:** Event tap'i temizleyerek uygulamayı kapatır.
+### Rebuild troubleshooting
 
-Dolu mouse simgesi düzeltmenin çalıştığını, soluk ve boş simge ise özelliğin kapalı
-olduğunu veya iznin eksik olduğunu gösterir.
+Bu yalnızca sık sık local/ad-hoc build alan geliştiriciler için bir edge case'tir.
+macOS, yeniden derlenen bazı uygulamaları yeni bir Accessibility identity olarak
+değerlendirebilir. System Settings'te MacScrollFix etkin görünmesine rağmen
+uygulama hâlâ izin istiyorsa eski MacScrollFix kaydını Accessibility listesinden
+kaldırın ve mevcut build'e bir kez yeniden izin verin.
 
-## Erişilebilirlik izni
+## Optional Development Signing
 
-MacScrollFix, sistem genelindeki scroll olaylarını değiştirmek için macOS
-**Erişilebilirlik (Accessibility)** iznine ihtiyaç duyar.
+Normal clone/build/run akışı için Team seçmek gerekmez; ücretsiz Apple hesabı
+veya ücretli Apple Developer Program üyeliği bu local source kullanımı için şart
+değildir. Sık rebuild sırasında Accessibility iznini daha stabil tutmak isteyen
+geliştiriciler, Xcode'da **TARGETS > MacScrollFix > Signing & Capabilities > Team**
+altından kendi Personal Team'ini seçebilir. Bu isteğe bağlı bir development
+troubleshooting adımıdır. Developer ID ile imzalanmış ve notarized public dağıtım
+ayrı bir konudur.
 
-1. MacScrollFix'i ilk kez çalıştırın ve macOS izin isteğini onaylayın.
-2. Gerekirse menüden **Erişilebilirlik Ayarlarını Aç** seçeneğine basın.
-3. **Sistem Ayarları > Gizlilik ve Güvenlik > Erişilebilirlik** bölümünde
-   MacScrollFix'i etkinleştirin.
+## Menu bar behavior
 
-Listede görünmüyorsa `+` düğmesiyle `MacScrollFix.app` dosyasını ekleyin. Uygulamayı
-yeniden derledikten veya başka bir klasöre taşıdıktan sonra macOS izni tekrar
-isteyebilir.
+Menü çubuğundaki MacScrollFix simgesinden:
 
-## Girişte başlatma
+- **Kaydırma Düzeltmesi** özelliği açar veya kapatır.
+- **Girişte Başlat** uygulamanın kullanıcı oturumu açıldığında başlamasını ister.
+- **Erişilebilirlik Ayarları…** gerekli macOS ayarlarını açar.
+- **Menü Çubuğundan Gizle** önce bir confirmation gösterir. Onaylandığında simge
+  restart ve login launch sonrasında da gizli kalır; uygulama ve scroll düzeltmesi
+  çalışmaya devam eder. Gizli çalışan uygulamayı Finder veya Applications üzerinden
+  tekrar açmak simgeyi geri getirir ve bu tercihi temizler.
 
-Menüdeki **Girişte Başlat** seçeneği macOS 13 ve sonrasındaki
-`SMAppService.mainApp` API'sini kullanır. macOS ek onay isterse
-**Sistem Ayarları > Genel > Giriş Öğeleri** bölümünden MacScrollFix'e izin verin.
+## Tests
 
-## Teknik çalışma şekli
-
-MacScrollFix, Core Graphics `CGEventTap` ile yalnızca `scrollWheel` olaylarını yakalar:
-
-- `scrollWheelEventIsContinuous == 0`: Standart fiziksel mouse kabul edilir ve
-  dikey/yatay delta alanları tersine çevrilir.
-- `scrollWheelEventIsContinuous != 0`: Trackpad kabul edilir ve olay değiştirilmeden
-  hedef uygulamaya iletilir.
-
-Olayın diğer özellikleri korunur. Global event değiştirme sandbox içinde güvenilir
-biçimde çalışmadığı için **App Sandbox** bilinçli olarak kapalıdır; uygulama yine de
-yalnızca scroll olaylarını yerel olarak işler.
-
-Tap'in kurulmuş görünmesi tek başına yeterli kabul edilmez. MacScrollFix tap'in
-geçerli ve etkin olduğunu düzenli olarak kontrol eder; sağlıksızsa eski kaynağı
-tamamen temizleyip yalnızca bir yeni tap oluşturur.
-
-## Kullanılan teknolojiler
-
-- Swift
-- SwiftUI ve AppKit
-- Core Graphics `CGEventTap`
-- ApplicationServices
-- ServiceManagement
-- XCTest
-
-Üçüncü taraf paket veya bağımlılık kullanılmaz.
-
-## Proje yapısı
-
-```text
-MacScrollFix.xcodeproj/                 Xcode proje ve paylaşılan scheme dosyaları
-MacScrollFix/
-├── MacScrollFixApp.swift               Menü çubuğu arayüzü ve uygulama yaşam döngüsü
-├── MacScrollFixModel.swift             Durum, izin ve Launch at Login yönetimi
-├── EventTapManager.swift             Global CGEventTap kurulumu ve temizliği
-├── ScrollEventTransformer.swift      Discrete/continuous ayrımı ve delta dönüşümü
-├── AppIcon.icon/                     Modern macOS uygulama ikonu
-└── Info.plist                        Uygulama bundle ayarları
-MacScrollFixTests/
-└── ScrollEventTransformerTests.swift
-```
-
-## Testler
-
-Xcode'da `Command + U` kullanabilir veya terminalde şu komutu çalıştırabilirsiniz:
+Xcode'da `⌘U` kullanabilir veya şunu çalıştırabilirsiniz:
 
 ```sh
 xcodebuild \
@@ -180,36 +101,40 @@ xcodebuild \
   test
 ```
 
-Birim testleri discrete dikey/yatay/üçüncü eksen delta dönüşümünü, continuous
-olayların değişmeden geçmesini, olay sınıflandırmasını ve çift dönüşümün özgün
-değerleri geri getirmesini doğrular. Gerçek mouse, trackpad, Safari, Finder ve
-Chrome davranışı ayrıca elle test edilmelidir.
+Testler discrete/continuous scroll sınıflandırmasını, delta dönüşümünü, Launch at
+Login durum eşlemesini ve menu bar visibility state'ini doğrular. Gerçek mouse,
+trackpad ve uygulama davranışı ayrıca elle test edilmelidir.
 
-## Gizlilik
+## Privacy
 
 MacScrollFix:
 
-- İnternet bağlantısı kullanmaz.
-- Kullanıcı hesabı veya uzak servis içermez.
+- İnternet bağlantısı, kullanıcı hesabı veya uzak servis kullanmaz.
 - Kullanıcı verisi toplamaz, saklamaz veya paylaşmaz.
-- Scroll olaylarını yalnızca cihaz üzerinde (**on-device**) ve anlık olarak işler.
-- Yerel teknik günlükler scroll değerlerini veya kullanıcı içeriğini kaydetmez.
+- Scroll olaylarını yalnızca cihaz üzerinde ve anlık olarak işler.
+- Yerel teknik günlüklerde scroll değerlerini veya kullanıcı içeriğini kaydetmez.
 - macOS'in genel Natural Scrolling ayarını değiştirmez.
 
-## Bilinen sınırlamalar
+## Limitations
 
 - Standart, kesikli scroll olayı üreten fiziksel USB/Bluetooth mouse'lar hedeflenir.
-- Magic Mouse ve bazı yüksek çözünürlüklü mouse'lar trackpad benzeri continuous
-  olay üretebilir. Bu aygıtlar güvenli tarafta kalmak için trackpad gibi
-  değerlendirilir ve yönleri değiştirilmez.
-- Fiziksel aygıt davranışı yalnızca otomatik birim testleriyle tamamen
-  doğrulanamaz.
+- Magic Mouse ve bazı yüksek çözünürlüklü mouse'lar continuous olay üretebilir.
+  Bunlar trackpad gibi değerlendirilir ve yönleri değiştirilmez.
+- Fiziksel aygıt davranışı yalnızca otomatik birim testleriyle tamamen doğrulanamaz.
 
-## Katkıda bulunma
+## Project layout
 
-Hata raporları ve iyileştirme katkıları kabul edilir. Geliştirme akışı ve pull
-request beklentileri için [CONTRIBUTING.md](CONTRIBUTING.md) dosyasını okuyun.
+```text
+MacScrollFix.xcodeproj/                 Xcode project and shared scheme
+MacScrollFix/                           App sources, Info.plist, and AppIcon.icon
+MacScrollFixTests/                      XCTest sources
+```
 
-## Lisans
+## Contributing
+
+Katkı akışı ve pull request beklentileri için [CONTRIBUTING.md](CONTRIBUTING.md)
+dosyasına bakın.
+
+## License
 
 Bu proje [MIT Lisansı](LICENSE) ile sunulmaktadır.
