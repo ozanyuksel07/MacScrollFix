@@ -24,29 +24,38 @@ uygulamasıdır. macOS'in genel Natural Scrolling ayarını değiştirmez.
 
 ## Build & Run
 
-Normal geliştirme akışı Apple hesabı veya Team seçimi gerektirmez:
+Normal geliştirme akışı Apple hesabı veya Team seçimi gerektirmez.
 
-1. Repoyu clone edin.
-2. `MacScrollFix.xcodeproj` dosyasını Xcode'da açın.
-3. Scheme olarak **MacScrollFix**, hedef olarak **My Mac** seçiliyken Run (`⌘R`) çalıştırın.
-4. İstendiğinde Accessibility iznini verin.
+1. Repoyu clone edin:
 
-Uygulama çalıştığında menü çubuğunda mouse simgesi görünür. Uygulamayı kalıcı
-kullanmak isterseniz Xcode'da **Products > MacScrollFix.app > Show in Finder**
-ile uygulamayı bulun ve `/Applications` klasörüne taşıyın.
+   ```bash
+   git clone https://github.com/ozanyuksel07/MacScrollFix.git ~/Downloads/MacScrollFix
+   cd ~/Downloads/MacScrollFix
 
-Komut satırında, imzalama gerektirmeden Debug build almak için:
+2. Xcode projesini açın:
 
-```sh
-xcodebuild \
-  -project MacScrollFix.xcodeproj \
-  -scheme MacScrollFix \
-  -configuration Debug \
-  -destination 'platform=macOS' \
-  -derivedDataPath build/DerivedData \
-  CODE_SIGNING_ALLOWED=NO \
-  build
-```
+   ```bash
+   open MacScrollFix.xcodeproj
+   ```
+
+3. Xcode'da scheme olarak **MacScrollFix**, hedef olarak **My Mac** seçin.
+
+4. Run (`⌘R`) çalıştırın.
+
+5. İstendiğinde Accessibility iznini verin:
+
+   `System Settings → Privacy & Security → Accessibility → MacScrollFix`
+
+6. Menü çubuğunda MacScrollFix simgesi göründüğünde uygulama kullanıma hazırdır. 
+**Kaydırma Düzeltmesi** durumunun `Aktif` olduğunu doğrulayın.
+
+7. Uygulamayı Xcode'dan bağımsız ve kalıcı kullanmak isterseniz Xcode menüsünden
+   **Product → Show Build Folder in Finder** seçeneğini açın.
+   Ardından `Products/Debug/MacScrollFix.app` dosyasını bulun ve `/Applications`
+   klasörüne taşıyın. `/Applications` içindeki **MacScrollFix.app** dosyasını açın.
+   macOS Accessibility iznini yeniden isterse bu kopya için bir kez izin verin.
+   **Girişte Başlat** özelliğini kullanacaksanız uygulamayı `/Applications`
+   klasörüne taşıdıktan sonra etkinleştirmeniz önerilir.
 
 ## Accessibility
 
